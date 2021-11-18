@@ -1,0 +1,2 @@
+(0, 0, 0) (1, 1, 1) (255, 100, 50)    5
+  pos_A     pos_B       color      thickness
