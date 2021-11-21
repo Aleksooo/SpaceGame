@@ -1,5 +1,5 @@
-from Enemy import Enemy
-from Coin import Coin
+from Obstacles import *
+
 
 class AI:
     def __init__(self):

@@ -1,14 +1,9 @@
-from Edge import *
+from Object import *
 
-class Terrain:
-    def __init__(self, screen):
-        """
-        :param screen - экран, нужно для отрисовки объектов
-        """
-        
-        self.screen = screen
-        self.coords = []
-        self.projected_coords = []
+
+class Terrain(Obj):
+    def __init__(self, screen, pos_center):
+        super().__init__(screen, pos_center)
 
     def generate_terrain(self) -> None:
         """
@@ -19,13 +14,6 @@ class Terrain:
     def update(self) -> None:
         """
         Функция изменяет высоту вершин согласно шуму перлина
-        """
-        pass
-    
-    def draw(self) -> None:
-        """
-        Функция отрисовывает все линии из массива projected_coords
-        !!!Вызывать только после проектирования в классе Engine!!! 
         """
         pass
 

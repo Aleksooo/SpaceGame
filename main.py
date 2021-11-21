@@ -1,5 +1,5 @@
 import pygame as pg
-from Bullet import *
+from Obstacles import *
 
 WIDTH, HEIGHT = 800, 600
 FPS = 60
