@@ -1,31 +1,37 @@
 from Edge import *
 import pygame as pg
+from math import cos, sin, radians
 
 
 class Obj:
-    def __init__(self, screen, pos_center):
+    def __init__(self, screen, pos_center, file, velocity, max_dist):
         """
         :param screen - экран, нужно для отрисовки объектов
         :param pos_center - позиция центра объекта
         """
 
         self.screen = screen
-        self.coords = [] # сюда надо считать данные о гранях из файла "Player_model.txt"
+        self.coords = read_data(file)  # сюда надо считать данные о гранях из файла "Player_model.txt"
         self.projected_coords = []
         self.pos_center = pos_center
+        self.velocity = velocity
+        self.max_dist = max(max(i.A.length(), i.B.length()) for i in self.coords)
 
     def update(self) -> None:
         """
         Здесь вызываются функции move() и rotate() по необходимости
         """
-        pass
+        self.move()
+        self.rotate()
+
 
     def move(self) -> None:
         """
         Функция двигает объект влево или вправо и также проверяет,
         чтобы объект не выходил на пределы экрана
         """
-        pass
+        self.pos_center += self.velocity
+
 
     def rotate(self, ax, angle) -> None:
         """
@@ -35,7 +41,37 @@ class Obj:
 
         :param angle - угол поворота
         """
-        pass
+        for i in self.coords:
+            if ax == 'x':
+                z = complex(i.A.y, i.A.z)
+                r = complex(cos(radians(angle)), sin(radians(angle)))
+                z_new = z*r
+                i.A = pg.Vector3(i.A.x, z_new.real, z_new.imag)
+                z = complex(i.B.y, i.B.z)
+                r = complex(cos(radians(angle)), sin(radians(angle)))
+                z_new = z * r
+                i.B = pg.Vector3(i.B.x, z_new.real, z_new.imag)
+            elif ax == 'y':
+                z = complex(i.A.x, i.A.z)
+                r = complex(cos(radians(angle)), sin(radians(angle)))
+                z_new = z * r
+                i.A = pg.Vector3(z_new.real, i.A.y, z_new.imag)
+                z = complex(i.B.x, i.B.z)
+                r = complex(cos(radians(angle)), sin(radians(angle)))
+                z_new = z * r
+                i.B = pg.Vector3(z_new.real, i.B.y, z_new.imag)
+            elif ax == 'z':
+                z = complex(i.A.x, i.A.y)
+                r = complex(cos(radians(angle)), sin(radians(angle)))
+                z_new = z * r
+                i.A = pg.Vector3(z_new.real, z_new.imag, i.A.z)
+                z = complex(i.B.x, i.B.y)
+                r = complex(cos(radians(angle)), sin(radians(angle)))
+                z_new = z * r
+                i.B = pg.Vector3(z_new.real, z_new.imag, i.B.z)
+
+
+
 
     def collide_сoin(self, coins: list):
         """
@@ -45,7 +81,12 @@ class Obj:
 
         Возвращает массив "монет" с которыми столкнулся
         """
-        pass
+        collided_coins = []
+        for i in coins:
+            if (self.pos_center - i.pos_center).length() <= self.max_dist + i.max_dist:
+                collided_coins.append(i)
+        return(collided_coins)
+
 
     def collide_enemy(self, enemies: list):
         """
@@ -55,24 +96,33 @@ class Obj:
 
         Возвращает массив "вражеских кораблей" с которыми столкнулся
         """
-        pass
+        collided_enemies = []
+        for i in enemies:
+            if (self.pos_center - i.pos_center).length() <= self.max_dist + i.max_dist:
+                collided_enemies.append(i)
+        return (collided_enemies)
 
     def collide_bullet(self, bullets: list):
         """
-        Проверка столкновения с "пуляти"
+        Проверка столкновения с "пулями"
 
         :param bullets - массив со всеми "пулями", находящимися на экане
 
         Возвращает массив "пуль" с которыми столкнулся
         """
-        pass
+        collided_bullets = []
+        for i in bullets:
+            if ((self.pos_center - i.A).length() <= self.max_dist) or ((self.pos_center - i.B).length() <= self.max_dist):
+                collided_bullets.append(i)
+        return(collided_bullets)
 
     def draw(self) -> None:
         """
         Функция отрисовывает все линии из массива projected_coords
         !!!Вызывать только после проектирования в классе Engine!!! 
         """
-        pass
+        for i in self.projected_coords:
+            pg.draw.line(self.screen, i.color, i.A, i.B, i.thickness)
 
 
 if __name__ == '__main__':
