@@ -1,3 +1,6 @@
+import pygame as pg
+
+
 class Edge:
     def __init__(self, pos_A, pos_B, color, thickness):
         """
@@ -12,5 +15,18 @@ class Edge:
         self.thickness = thickness
 
 
-def read_data(file) -> Edge:
-    pass
+def read_data(file):
+    coords = []
+    with open(file) as file:
+        for line in file:
+            if len(line.strip()) == 0 or line[0] == '#':
+                continue
+            parameters = line.split()
+            for i in range(0, 3):
+                parameters[i] = list(map(int, list(parameters[i].split(','))))
+            parameters[0] = pg.Vector3(parameters[0])
+            parameters[1] = pg.Vector3(parameters[1])
+            parameters[3] = int(parameters[3])
+            coords.append(Edge(parameters[0], parameters[1], parameters[2], parameters[3]))
+    return(coords)
+
