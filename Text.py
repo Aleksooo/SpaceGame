@@ -15,6 +15,7 @@ class Text:
         self.screen = screen
         self.color = color
         self.pos = pos
+        self.size = size
 
         self.f = pg.font.Font(None, size)
         self.text = self.f.render(phrase, True, self.color)
@@ -25,13 +26,13 @@ class Text:
 
         :param phrase - новый текст 
         """
-        pass
+        self.text = self.f.render(phrase, True, self.color)
 
     def draw(self) -> None:
         """
         Отрисовка текста
         """
-        pass
+        self.screen.blit(self.text, self.pos)
 
 
 if __name__ == '__main__':
