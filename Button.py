@@ -41,7 +41,8 @@ class Button():
         self.text.pos = tpos
         #--> Надо не забыть, что эту функцию надо вызывать сразу после создания экземпляра класса "Button"
     '''
-    def on_click(self, function: bool) -> None:
+
+    def on_click(self, function) -> None:
         """
         Функция проверяет нажатие на кнопку и выполняет функцию "function"
         при нажатии
@@ -49,17 +50,19 @@ class Button():
         :param function - функция для исполнения
         """
         mouse_pos = pg.mouse.get_pos()
-        if self.pos.x < mouse_pos.x < (self.pos.x + self.width):
-            if self.pos.y < mouse_pos.y < (self.pos.y + self.height):
+        if self.pos.x < mouse_pos[0] < (self.pos.x + self.width):
+            if self.pos.y < mouse_pos[1] < (self.pos.y + self.height):
                 print('tyk') 
-                return not function # доделать эту фигню!!!
+                self.bg_color = (200, 0, 0)
+                return function # доделать эту фигню!!!
+        return function
 
     def draw(self) -> None:
         """
         Отрисовка самой кнопки и текста внутри неё
         """
-        pg.polygon(self.screen, self.bg_color, [self.pos.x, self.pos.y], [self.pos.x + self.width, self.pos.y], 
-                                               [self.pos.x +self.width, self.pos.y + self.height], [self.pos.x, self.pos.y + self.height])
+        pg.draw.polygon(self.screen, self.bg_color, [[self.pos.x, self.pos.y], [self.pos.x + self.width, self.pos.y], 
+                                               [self.pos.x +self.width, self.pos.y + self.height], [self.pos.x, self.pos.y + self.height]])
         self.text.draw()
 
 

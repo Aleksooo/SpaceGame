@@ -44,7 +44,7 @@ class UI:
                 if event.button == 1:
                     for i in self.UI_elements:
                         if i.type == "button":
-                            return i.on_click(function) # доделать эту фигню!!!
+                            i.on_click(function) # доделать эту фигню!!!
         return function
 
     def draw(self) -> None:
