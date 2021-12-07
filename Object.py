@@ -4,7 +4,7 @@ from math import cos, sin, radians
 
 
 class Obj:
-    def __init__(self, screen, pos_center, file, velocity, max_dist):
+    def __init__(self, screen, pos_center, file, velocity, angle):
         """
         :param screen - экран, нужно для отрисовки объектов
         :param pos_center - позиция центра объекта
@@ -16,6 +16,8 @@ class Obj:
         self.pos_center = pos_center
         self.velocity = velocity
         self.max_dist = max(max(i.A.length(), i.B.length()) for i in self.coords)
+        self.angle = 0
+        self.file = file
 
     def update(self) -> None:
         """
@@ -41,6 +43,7 @@ class Obj:
 
         :param angle - угол поворота
         """
+        self.angle += angle
         for i in self.coords:
             if ax == 'x':
                 z = complex(i.A.y, i.A.z)
