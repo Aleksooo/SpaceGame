@@ -4,19 +4,24 @@ from math import cos, sin, radians
 
 
 class Obj:
-    def __init__(self, screen, pos_center, file, velocity, angle):
+    def __init__(self, screen, pos_center, file, velocity, angle, scale):
         """
         :param screen - экран, нужно для отрисовки объектов
         :param pos_center - позиция центра объекта
         """
 
         self.screen = screen
+        self.scale = scale
         self.coords = read_data(file)  # сюда надо считать данные о гранях из файла "Player_model.txt"
+        for i in self.coords:
+            i.A *= scale
+            i.B *= scale
+            
         self.projected_coords = []
         self.pos_center = pos_center
         self.velocity = velocity
         self.max_dist = max(max(i.A.length(), i.B.length()) for i in self.coords)
-        self.angle = 0
+        self.angle = angle
         self.file = file
 
     def update(self) -> None:
@@ -43,7 +48,13 @@ class Obj:
 
         :param angle - угол поворота
         """
-        self.angle += angle
+        if ax == 'x':
+            self.angle.x += angle
+        elif ax == 'y':
+            self.angle.y += angle
+        elif ax == 'z':
+            self.angle.z += angle
+        
         for i in self.coords:
             if ax == 'x':
                 z = complex(i.A.y, i.A.z)
@@ -124,8 +135,9 @@ class Obj:
         Функция отрисовывает все линии из массива projected_coords
         !!!Вызывать только после проектирования в классе Engine!!! 
         """
+        pos_center_v2 = pg.Vector2(self.pos_center.x, self.pos_center.y)
         for i in self.projected_coords:
-            pg.draw.line(self.screen, i.color, i.A, i.B, i.thickness)
+            pg.draw.line(self.screen, i[2], pos_center_v2 + i[0], pos_center_v2 + i[1], i[3])
 
 
 if __name__ == '__main__':
