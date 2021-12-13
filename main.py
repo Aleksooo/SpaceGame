@@ -33,7 +33,7 @@ class App:
 
         self.Engine = Engine(WIDTH, HEIGHT, -30)
         self.Player = Player(self.screen, pg.Vector3(WIDTH/2, HEIGHT-100, 0), 'Player_model.txt', pg.Vector3(), pg.Vector3(0, 0, 0), 25)
-        self.Terrain = Terrain(self.screen, WIDTH, 600, 16, 10, HEIGHT+20, (34, 139, 34), 1)
+        self.Terrain = Terrain(self.screen, WIDTH, 550, 20, 12, HEIGHT+20, (34, 139, 34), 1)
 
     def run(self):
         while True:
@@ -75,10 +75,7 @@ class App:
                 for event in pg.event.get():
                     if event.type == pg.KEYDOWN:
                         if event.key == pg.K_SPACE:
-                            print('lol')
-                            
-                    if event.type == pg.QUIT:
-                        sys.exit()
+                            pass
 
                 ''' Эта фигня работает '''
                 keys = pg.key.get_pressed()

@@ -25,7 +25,7 @@ class Terrain():
 
         self.dx = self.width/self.num_x
         self.dz = self.height/self.num_z
-        self.dy = 6
+        self.dy = 7
         self.h = 50
         self.b = 0.01
 
