@@ -3,7 +3,7 @@ from Text import *
 
 
 class Button():
-    def __init__(self, screen, bg_color: tuple, color: tuple, pos, width: int, height: int, size: int, phrase: str):
+    def __init__(self, screen, bg_color: tuple, color: tuple, pos, width: int, height: int, size: int, phrase: str, function: str):
         """
         :param screen - экран, нужно для отрисовки объектов
         :param color - цвет кнопки
@@ -18,6 +18,7 @@ class Button():
         self.size = size
         self.pos = pos
         self.width, self.height = width, height
+        self.function = function
 
         self.text = Text(self.screen, color, pg.Vector2(), size, phrase)
         
@@ -42,7 +43,7 @@ class Button():
         #--> Надо не забыть, что эту функцию надо вызывать сразу после создания экземпляра класса "Button"
     '''
 
-    def on_click(self, function) -> None:
+    def on_click(self, control_vars) -> None:
         """
         Функция проверяет нажатие на кнопку и выполняет функцию "function"
         при нажатии
@@ -52,10 +53,11 @@ class Button():
         mouse_pos = pg.mouse.get_pos()
         if self.pos.x < mouse_pos[0] < (self.pos.x + self.width):
             if self.pos.y < mouse_pos[1] < (self.pos.y + self.height):
-                print('tyk') 
-                self.bg_color = (200, 0, 0)
-                return function # доделать эту фигню!!!
-        return function
+                if self.function == 'play':
+                    return {'in_menu': False, 'in_game': True, 'in_pause': False}
+                elif self.function == 'pause':
+                    return {'in_menu': False, 'in_game': False, 'in_pause': True}
+        return control_vars
 
     def draw(self) -> None:
         """

@@ -6,7 +6,8 @@ from math import *
 class Player(Obj):
     def __init__(self, screen, pos_center, file, velocity, angle, scale):
         super().__init__(screen, pos_center, file, velocity, angle, scale)
-        self.rotate('x', 180)
+        self.rotate('z', 180)
+        self.angle.z = 0
         
     def update(self) -> None:
         """
