@@ -14,11 +14,13 @@ class Text:
         self.type = "text"
         self.screen = screen
         self.color = color
-        self.pos = pos
-        self.size = size
-
         self.f = pg.font.Font(None, size)
         self.text = self.f.render(phrase, True, self.color)
+        twidth = self.text.get_width()
+        theight = self.text.get_height()
+        self.pos = pg.Vector2(pos.x - twidth/2, pos.y - theight/2)
+        self.size = size
+
 
     def update_phrase(self, phrase: str) -> None:
         """

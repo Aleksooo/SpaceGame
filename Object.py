@@ -105,7 +105,8 @@ class Obj:
             if (self.pos_center - i.pos_center).length() <= self.max_dist + i.max_dist:
                 collided_coins.append(i)
                 i.time_to_die = True
-        return(collided_coins)
+                return True
+        return False
 
 
     def collide_enemy(self, enemies):
@@ -120,7 +121,8 @@ class Obj:
         for i in enemies:
             if (self.pos_center - i.pos_center).length() <= self.max_dist + i.max_dist:
                 collided_enemies.append(i)
-        return (collided_enemies)
+                return True
+        return False
 
     def collide_bullet(self, bullets):
         """
@@ -136,6 +138,8 @@ class Obj:
                 collided_bullets.append(i)
                 self.time_to_die = True
                 i.time_to_die = True
+                return True
+        return False
 
     def draw(self) -> None:
         """

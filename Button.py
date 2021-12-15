@@ -21,11 +21,11 @@ class Button():
         self.function = function
 
         self.text = Text(self.screen, color, pg.Vector2(), size, phrase)
-        
         twidth = self.text.text.get_width()
         theight = self.text.text.get_height()
         tpos = pg.Vector2(self.pos.x + self.width/2 - twidth/2, self.pos.y + self.height/2 - theight/2)
         self.text.pos = tpos
+        
 
     '''
     def create_text(self, color, size: int, phrase: str) -> None:
@@ -54,9 +54,10 @@ class Button():
         if self.pos.x < mouse_pos[0] < (self.pos.x + self.width):
             if self.pos.y < mouse_pos[1] < (self.pos.y + self.height):
                 if self.function == 'play':
-                    return {'in_menu': False, 'in_game': True, 'in_pause': False}
+                    return {'in_menu': False, 'in_game': True, 'in_pause': False, 'end_game': False}
                 elif self.function == 'pause':
-                    return {'in_menu': False, 'in_game': False, 'in_pause': True}
+                    return {'in_menu': False, 'in_game': False, 'in_pause': True, 'end_game': False}
+
         return control_vars
 
     def draw(self) -> None:

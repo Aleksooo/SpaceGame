@@ -12,7 +12,7 @@ FPS = 60
 
 BG = (45,64,89)
 BLACK = (0, 0, 0)
-WHITE = (255, 255, 255)
+WHITE = (255,250,250)
 TEAL = (0, 128, 128)
 
 
@@ -32,10 +32,11 @@ class App:
 
         self.score = 0
 
-        self.control_vars = {'in_menu': True, 'in_game': False, 'in_pause': False}
-        self.create_menu()
+        self.control_vars = {'in_menu': True, 'in_game': False, 'in_pause': False, 'end_game': False}
+        #self.create_menu()
 
         self.lift = HEIGHT
+        self.flag = False
 
         self.Engine = Engine(WIDTH, HEIGHT, -30)
         self.Player = Player(self.screen, pg.Vector3(WIDTH/2, self.lift, 0), 'Player_model.txt', pg.Vector3(), pg.Vector3(0, 0, 0), 20)
@@ -98,7 +99,8 @@ class App:
 
                 for en in self.enemies:
                     en.update()
-                    en.collide_bullet(self.bullets)
+                    if en.collide_bullet(self.bullets):
+                        self.score += 2
                     if en.time_to_die:
                         self.enemies_to_die.append(en)
 
@@ -131,7 +133,10 @@ class App:
 
                 
                 self.Player.update()
-                self.Player.collide_сoin(self.coins)
+                if self.Player.collide_сoin(self.coins):
+                    self.score += 2.5
+                if self.Player.collide_enemy(self.enemies):
+                    self.control_vars = {'in_menu': False, 'in_game': False, 'in_pause': False, 'end_game': True}
                 if self.Player.time_to_shoot:
                     self.bullets.append(self.Player.shoot())
                 self.Engine.orthogonal_projection_edge(self.Player)
@@ -139,13 +144,56 @@ class App:
                 self.Player.draw()
 
                 self.control_vars = self.UI.update(self.control_vars)
-                self.UI.UI_elements[0].update_phrase('Счёт:' + str(self.score)) # Поправить потом!
+                self.UI.UI_elements[0].update_phrase('Счёт:' + str(int(self.score))) # Поправить потом!
                 self.UI.draw()
 
+                if pg.event.get() != []:
+                    print(pg.event.get())
                 for event in pg.event.get():
                     if event.type == pg.KEYDOWN:
-                        if event.key == pg.K_SPACE:
-                            pass
+                        if event.key == pg.K_LEFT:
+                            print('lol')
+
+                ''' Эта фигня работает '''
+                keys = pg.key.get_pressed()
+                if keys[pg.K_ESCAPE]:
+                    exit()
+                elif keys[pg.K_p]:
+                    self.control_vars = {'in_menu': False, 'in_game': True, 'in_pause': True, 'end_game': False}
+                    self.flag = True
+
+                if self.control_vars.get('in_pause'):
+                    s = pg.Surface((WIDTH, HEIGHT))
+                    s.set_alpha(100)
+                    s.fill((0, 0, 0))
+                    self.screen.blit(s, (0,0))
+
+                pg.display.flip()
+                '''
+                while self.control_vars.get('in_pause'):
+                    self.clock.tick(FPS)
+                    pg.display.set_caption(str(int(self.clock.get_fps())))
+
+                    keys = pg.key.get_pressed()
+                    if keys[pg.K_ESCAPE]:
+                        exit()
+                    elif keys[pg.K_o]:
+                        print('lol')
+                        self.control_vars = {'in_menu': False, 'in_game': True, 'in_pause': False}
+                    
+                    pg.display.flip()
+                '''
+            
+            self.create_end_gameUI()
+
+            while self.control_vars.get('end_game'):
+                self.restore_game()
+                self.clock.tick(FPS)
+                self.screen.fill(BG)
+                pg.display.set_caption(str(int(self.clock.get_fps())))
+
+                self.control_vars = self.UI.update(self.control_vars)
+                self.UI.draw()
 
                 ''' Эта фигня работает '''
                 keys = pg.key.get_pressed()
@@ -153,17 +201,33 @@ class App:
                     exit()
 
                 pg.display.flip()
-            
+
+
     
     def create_menu(self):
         self.UI.restore()
-        self.UI.add_text(self.screen, BLACK, pg.Vector2(WIDTH/2-140, 200), 45, "Супер-пупер игра!")
-        self.UI.add_button(self.screen, TEAL, BLACK, pg.Vector2(WIDTH/2-100, 400), 200, 40, 30, "Начать", 'play')
+        self.UI.add_text(self.screen, WHITE, pg.Vector2(WIDTH/2, 200), 70, "SpaceGame")
+        self.UI.add_button(self.screen, TEAL, WHITE, pg.Vector2(WIDTH/2-100, 400), 200, 40, 30, "Начать", 'play')
 
     def create_gameUI(self):
         self.UI.restore()
-        self.UI.add_text(self.screen, WHITE, pg.Vector2(10, 10), 30, 'Счёт:' + str(self.score))
+        self.UI.add_text(self.screen, WHITE, pg.Vector2(38, 18), 30, 'Счёт: ' + str(self.score))
 
+    def create_end_gameUI(self):
+        self.UI.restore()
+        self.UI.add_text(self.screen, WHITE, pg.Vector2(WIDTH/2, HEIGHT/2-100), 70, "Вы проиграли:(")
+        self.UI.add_text(self.screen, WHITE, pg.Vector2(WIDTH/2, HEIGHT/2), 40, 'Ваш счёт: ' + str(int(self.score)))
+        self.UI.add_button(self.screen, TEAL, WHITE, pg.Vector2(WIDTH/2-100, HEIGHT/2+100), 200, 40, 30, "Перезапустить", 'play')
+
+    def restore_game(self):
+        self.enemies = []
+        self.enemies_to_die = []
+        self.bullets = []
+        self.bullets_to_die = []
+        self.coins = []
+        self.coins_to_die = []
+        self.score = 0
+        self.Player.pos_center = pg.Vector3(WIDTH/2, self.lift, 0)
 
 if __name__ == '__main__':
     app = App()
