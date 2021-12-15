@@ -30,7 +30,7 @@ class Terrain():
         self.b = 0.01
 
         self.time = 0
-        self.delay = 5
+        self.delay = 7
 
         self.generate_terrain()
 

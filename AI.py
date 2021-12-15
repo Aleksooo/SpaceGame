@@ -7,8 +7,8 @@ class AI:
         self.time_to_spawn_coin = False
         self.time_enemy = 0
         self.time_coin = 0
-        self.delay_enemy = 150
-        self.delay_coin = 100
+        self.delay_enemy = randint(150, 180)
+        self.delay_coin = randint(80, 120)
         self.screen = screen
         self.lift = lift
         self.distance = distance
@@ -25,11 +25,13 @@ class AI:
         if self.time_enemy == self.delay_enemy:
             self.time_enemy = 0
             self.time_to_spawn_enemy = True
+            self.delay_enemy = randint(150, 180)
         self.time_enemy += 1
         
         if self.time_coin == self.delay_coin:
             self.time_coin = 0
             self.time_to_spawn_coin = True
+            self.delay_coin = randint(80, 120)
         self.time_coin += 1
 
     def spawn_enemies(self) -> list[Enemy]:

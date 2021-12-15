@@ -119,7 +119,7 @@ class Obj:
         """
         collided_enemies = []
         for i in enemies:
-            if (self.pos_center - i.pos_center).length() <= self.max_dist + i.max_dist:
+            if (self.pos_center - i.pos_center).length() <= 0.9*(self.max_dist + i.max_dist):
                 collided_enemies.append(i)
                 return True
         return False
@@ -134,7 +134,7 @@ class Obj:
         """
         collided_bullets = []
         for i in bullets:
-            if ((self.pos_center - (i.pos_center + i.coords[0].A)).length() <= self.max_dist) or ((self.pos_center - (i.pos_center + i.coords[0].B)).length() <= self.max_dist):
+            if ((self.pos_center - (i.pos_center + i.coords[0].A)).length() <= 0.9*self.max_dist) or ((self.pos_center - (i.pos_center + i.coords[0].B)).length() <= 0.9*self.max_dist):
                 collided_bullets.append(i)
                 self.time_to_die = True
                 i.time_to_die = True
