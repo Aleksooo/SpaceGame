@@ -21,13 +21,17 @@ class Engine:
     def rotate_plane(self, ax: str, ange: float):
         pass
 
-    def orthogonal_projection(self, obj) -> list:
+    def orthogonal_projection_edge(self, obj) -> list:
         obj.projected_coords = []
         for i in obj.coords:
             obj.projected_coords.append([pg.Vector2(i.A.x , i.A.y*cos(self.angle) + i.A.z*sin(self.angle)), 
                                         pg.Vector2(i.B.x , i.B.y*cos(self.angle) + i.B.z*sin(self.angle)), 
                                         i.color, 
                                         i.thickness])
+        
+
+    def orthogonal_projection(self, obj):
+        obj.pos_center_v2 = pg.Vector2(obj.pos_center.x, obj.pos_center.y*cos(self.angle) + obj.pos_center.z*sin(self.angle))
     
 
 if __name__ == '__main__':

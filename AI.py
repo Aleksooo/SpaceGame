@@ -1,19 +1,23 @@
 from Obstacles import *
-import random
+from random import choice, randint
 
 class AI:
-    def __init__(self, screen, distance):
+    def __init__(self, screen, lift, distance):
         self.time_to_spawn_enemy = False
         self.time_to_spawn_coin = False
         self.time_enemy = 0
         self.time_coin = 0
-        self.delay_enemy = 60
-        self.delay_coin = 90
+        self.delay_enemy = 150
+        self.delay_coin = 100
         self.screen = screen
-        self.patterns = [[pg.Vector3(100, 300, distance), pg.Vector3(300, 300, distance), pg.Vector3(500, 300, distance), pg.Vector3(700, 300, distance)],
-                         [pg.Vector3(100, 300, distance + 150), pg.Vector3(300, 300, distance + 100), pg.Vector3(500, 300, distance + 50), pg.Vector3(700, 300, distance)],
-                         [pg.Vector3(100, 300, distance + 100), pg.Vector3(250, 300, distance + 50), pg.Vector3(400, 300, distance), pg.Vector3(550, 300, distance + 50), pg.Vector3(700, 300, distance + 100)]]
+        self.lift = lift
+        self.distance = distance
 
+        self.patterns = [[pg.Vector3(100, lift, distance), pg.Vector3(300, lift, distance), pg.Vector3(500, lift, distance), pg.Vector3(700, lift, distance)],
+                         [pg.Vector3(100, lift, distance + 150), pg.Vector3(300, lift, distance + 100), pg.Vector3(500, lift, distance + 50), pg.Vector3(700, lift, distance)],
+                         [pg.Vector3(100, lift, distance + 100), pg.Vector3(250, lift, distance + 50), pg.Vector3(400, lift, distance), pg.Vector3(550, lift, distance + 50), pg.Vector3(700, lift, distance + 100)]]
+
+    
     def update(self):
         """
         Вызывает функции spawn_enemy и spawn_coins соглассно таймеру
@@ -22,6 +26,7 @@ class AI:
             self.time_enemy = 0
             self.time_to_spawn_enemy = True
         self.time_enemy += 1
+        
         if self.time_coin == self.delay_coin:
             self.time_coin = 0
             self.time_to_spawn_coin = True
@@ -32,8 +37,8 @@ class AI:
         Возвращает массив из "вражеских кораблей" согласно данным из массива pattern
         """
         enemies = []
-        for i in random.choice(self.patterns):
-            enemies.append(Enemy(self.screen, i, 'Enemy_model.txt', pg.Vector3(0, 0, -5), 0, 20))
+        for i in list(choice(self.patterns)):
+            enemies.append(Enemy(self.screen, pg.Vector3(i.x, i.y, i.z), 'Enemy_model.txt', pg.Vector3(0, 0, -5),  pg.Vector3(0, 0, 0), 20))
         self.time_to_spawn_enemy = False
         return enemies
 
@@ -42,8 +47,8 @@ class AI:
         Возвращает массив из "Монет" согласно данным из массива pattern
         """
         coins = []
-        x = random.randint(50, 750)
-        coins.append(Coin(self.screen, pg.Vector3(x, 300, 500), 'Coin_model.txt', pg.Vector3(0, 0, -5), 0, 20))
+        x = randint(50, 750)
+        coins.append(Coin(self.screen, pg.Vector3(x, self.lift, self.distance), 'Coin_model.txt', pg.Vector3(0, 0, -5),  pg.Vector3(0, 0, 0), 20))
         self.time_to_spawn_coin = False
         return coins
 

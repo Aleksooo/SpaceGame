@@ -19,17 +19,22 @@ class Obj:
             
         self.projected_coords = []
         self.pos_center = pos_center
+        self.pos_center_v2 = pg.Vector2
         self.velocity = velocity
         self.max_dist = max(max(i.A.length(), i.B.length()) for i in self.coords)
         self.angle = angle
         self.file = file
 
+        self.time_to_die = False
+
     def update(self) -> None:
         """
         Здесь вызываются функции move() и rotate() по необходимости
         """
-        self.move()
-        self.rotate()
+        if self.pos_center.z <= -200 or self.pos_center.z >= 1500:
+            self.time_to_die = True
+
+        self.pos_center += self.velocity
 
 
     def move(self) -> None:
@@ -87,7 +92,7 @@ class Obj:
 
 
 
-    def collide_сoin(self, coins: list):
+    def collide_сoin(self, coins):
         """
         Проверка столкновения с "монетами"
 
@@ -99,10 +104,11 @@ class Obj:
         for i in coins:
             if (self.pos_center - i.pos_center).length() <= self.max_dist + i.max_dist:
                 collided_coins.append(i)
+                i.time_to_die = True
         return(collided_coins)
 
 
-    def collide_enemy(self, enemies: list):
+    def collide_enemy(self, enemies):
         """
         Проверка столкновения с "вражескими кораблями"
 
@@ -116,7 +122,7 @@ class Obj:
                 collided_enemies.append(i)
         return (collided_enemies)
 
-    def collide_bullet(self, bullets: list):
+    def collide_bullet(self, bullets):
         """
         Проверка столкновения с "пулями"
 
@@ -126,18 +132,19 @@ class Obj:
         """
         collided_bullets = []
         for i in bullets:
-            if ((self.pos_center - i.A).length() <= self.max_dist) or ((self.pos_center - i.B).length() <= self.max_dist):
+            if ((self.pos_center - (i.pos_center + i.coords[0].A)).length() <= self.max_dist) or ((self.pos_center - (i.pos_center + i.coords[0].B)).length() <= self.max_dist):
                 collided_bullets.append(i)
-        return(collided_bullets)
+                self.time_to_die = True
+                i.time_to_die = True
 
     def draw(self) -> None:
         """
         Функция отрисовывает все линии из массива projected_coords
         !!!Вызывать только после проектирования в классе Engine!!! 
         """
-        pos_center_v2 = pg.Vector2(self.pos_center.x, self.pos_center.y)
+        #pos_center_v2 = pg.Vector2(self.pos_center.x, self.pos_center.y)
         for i in self.projected_coords:
-            pg.draw.line(self.screen, i[2], pos_center_v2 + i[0], pos_center_v2 + i[1], i[3])
+            pg.draw.line(self.screen, i[2], self.pos_center_v2 + i[0], self.pos_center_v2 + i[1], i[3])
 
 
 if __name__ == '__main__':
