@@ -9,7 +9,7 @@ import sys
 WIDTH, HEIGHT = 800, 600
 FPS = 60
 
-BG = (230, 230, 250)
+BG = (45,64,89)
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 TEAL = (0, 128, 128)
@@ -32,7 +32,7 @@ class App:
         self.create_menu()
 
         self.Engine = Engine(WIDTH, HEIGHT, -30)
-        self.Player = Player(self.screen, pg.Vector3(WIDTH/2, HEIGHT-100, 0), 'Player_model.txt', pg.Vector3(), pg.Vector3(0, 0, 0), 25)
+        self.Player = Player(self.screen, pg.Vector3(WIDTH/2, HEIGHT-100, 0), 'Coin_model.txt', pg.Vector3(), pg.Vector3(0, 0, 0), 20)
         self.Terrain = Terrain(self.screen, WIDTH, 550, 20, 12, HEIGHT+20, (34, 139, 34), 1)
 
     def run(self):
