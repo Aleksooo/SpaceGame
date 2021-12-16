@@ -29,7 +29,7 @@ class Player(Obj):
             if self.angle.z >= -25:
                 self.rotate('z', -rotation_angle)
             self.pos_center += self.velocity
-        elif pg.key.get_pressed()[pg.K_d] and (self.pos_center.x + self.max_dist) < 800:  #придумать что-то с шириной
+        elif pg.key.get_pressed()[pg.K_d] and (self.pos_center.x + self.max_dist) < 800:
             self.velocity.x = 5
             if self.angle.z <= 25:
                 self.rotate('z', rotation_angle)
@@ -49,7 +49,7 @@ class Player(Obj):
 
     def shoot(self):
         """
-        Функция вызывается в "main.py" и отвечает за периодическое создание пульвк
+        Функция вызывается в "main.py" и отвечает за создание элемента класса Bullet при нажатии игроком на пробел
         """
         self.time_to_shoot = False
         return Bullet(self.screen, pg.Vector3(self.pos_center.x, self.pos_center.y, self.pos_center.z), self.file, pg.Vector3(0, 0, 5), pg.Vector3(0, 0, 0), 0)

@@ -10,9 +10,9 @@ from AI import *
 WIDTH, HEIGHT = 800, 600
 FPS = 60
 
-BG = (45,64,89)
+BG = (45, 64, 89)
 BLACK = (0, 0, 0)
-WHITE = (255,250,250)
+WHITE = (255, 250, 250)
 TEAL = (0, 128, 128)
 
 
@@ -134,7 +134,6 @@ class App:
                     self.Engine.orthogonal_projection(b)
                     b.draw()
 
-                
                 self.Player.update()
                 if self.Player.collide_сoin(self.coins):
                     self.score += 2.5
@@ -224,27 +223,41 @@ class App:
 
                 pg.display.flip()
 
-    
     def create_menu(self):
+        """
+        Функция отвечает за создание игрового меню
+        """
         self.UI.restore()
         self.UI.add_text(self.screen, WHITE, pg.Vector2(WIDTH/2, 200), 70, "SpaceGame")
         self.UI.add_button(self.screen, TEAL, WHITE, pg.Vector2(WIDTH/2-100, 400), 200, 40, 30, "Начать", 'play')
 
     def create_gameUI(self):
+        """
+        Функция отвечает за создание интерфейса в игре: отображает счёт игрока
+        """
         self.UI.restore()
         self.UI.add_text(self.screen, WHITE, pg.Vector2(38, 18), 30, 'Счёт: 0')
 
     def create_pauseUI(self):
+        """
+        Функция отвечает за экран паузы
+        """
         self.UI.restore()
         self.UI.add_text(self.screen, WHITE, pg.Vector2(WIDTH/2, HEIGHT/2), 40, 'Пауза')
 
     def create_end_gameUI(self):
+        """
+        Функция отвечает за экран при проигрыше
+        """
         self.UI.restore()
         self.UI.add_text(self.screen, WHITE, pg.Vector2(WIDTH/2, HEIGHT/2-100), 70, "Вы проиграли:(")
         self.UI.add_text(self.screen, WHITE, pg.Vector2(WIDTH/2, HEIGHT/2), 40, 'Ваш счёт: ' + str(int(self.score)))
         self.UI.add_button(self.screen, TEAL, WHITE, pg.Vector2(WIDTH/2-100, HEIGHT/2+100), 200, 40, 30, "Перезапустить", 'play')
 
     def restore_game(self):
+        """
+        Функция перезапускает игру
+        """
         self.enemies = []
         self.enemies_to_die = []
         self.bullets = []

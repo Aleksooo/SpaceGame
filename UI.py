@@ -5,6 +5,7 @@ from Text import *
 
 BLACK = (0,0,0)
 
+
 class UI:
     def __init__(self, screen):
         """
@@ -22,7 +23,6 @@ class UI:
         класса Button
         """
         self.UI_elements.append(Button(screen, bg_color, color, pos, width, height, size, phrase, function))
-
 
     def add_text(self, screen, color, pos, size: int, phrase: str) -> None:
         """

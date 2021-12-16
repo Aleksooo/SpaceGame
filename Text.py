@@ -21,7 +21,6 @@ class Text:
         self.pos = pg.Vector2(pos.x - twidth/2, pos.y - theight/2)
         self.size = size
 
-
     def update_phrase(self, phrase: str) -> None:
         """
         Замена текущего текста на новый из переменной "phrase"

@@ -1,6 +1,7 @@
 from Obstacles import *
 from random import choice, randint
 
+
 class AI:
     def __init__(self, screen, lift, distance):
         self.time_to_spawn_enemy = False
@@ -17,10 +18,9 @@ class AI:
                          [pg.Vector3(100, lift, distance + 150), pg.Vector3(300, lift, distance + 100), pg.Vector3(500, lift, distance + 50), pg.Vector3(700, lift, distance)],
                          [pg.Vector3(100, lift, distance + 100), pg.Vector3(250, lift, distance + 50), pg.Vector3(400, lift, distance), pg.Vector3(550, lift, distance + 50), pg.Vector3(700, lift, distance + 100)]]
 
-    
     def update(self):
         """
-        Вызывает функции spawn_enemy и spawn_coins соглассно таймеру
+        Проверяет, пора ли спавнить монеты и противников на экране
         """
         if self.time_enemy == self.delay_enemy:
             self.time_enemy = 0

@@ -29,7 +29,6 @@ class Engine:
                                         i.color, 
                                         i.thickness])
         
-
     def orthogonal_projection(self, obj):
         obj.pos_center_v2 = pg.Vector2(obj.pos_center.x, obj.pos_center.y*cos(self.angle) + obj.pos_center.z*sin(self.angle))
     

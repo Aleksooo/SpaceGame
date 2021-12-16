@@ -16,6 +16,12 @@ class Edge:
 
 
 def read_data(file):
+    """
+    Функция считывает из файла координаты вершин объектов для последующей отрисовки, возвращает массив элементов
+    класса Edge
+
+    :param file - файл, содержащий координатыЫ
+    """
     coords = []
     with open(file) as file:
         for line in file:
