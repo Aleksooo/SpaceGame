@@ -4,6 +4,11 @@ from random import choice, randint
 
 class AI:
     def __init__(self, screen, lift, distance):
+        """
+        :param screen - экран, нужно для отрисовки объектов
+        :param lift - смещение равнины по оси Oy
+        :param distance - растояние, на котором будут появляться враги и монеты
+        """
         self.time_to_spawn_enemy = False
         self.time_to_spawn_coin = False
         self.time_enemy = 0
@@ -34,7 +39,7 @@ class AI:
             self.delay_coin = randint(80, 120)
         self.time_coin += 1
 
-    def spawn_enemies(self) -> list[Enemy]:
+    def spawn_enemies(self):
         """
         Возвращает массив из "вражеских кораблей" согласно данным из массива pattern
         """
@@ -44,7 +49,7 @@ class AI:
         self.time_to_spawn_enemy = False
         return enemies
 
-    def spawn_coins(self) -> list[Coin]:
+    def spawn_coins(self):
         """
         Возвращает массив из "Монет" согласно данным из массива pattern
         """

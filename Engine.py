@@ -7,21 +7,18 @@ class Engine:
     def __init__(self, WIDTH, HEIGHT, angle):
         """
         :param WIDTH, HEIGHT - высота и ширина экрана
+        :param angle - угол, на который поворачивается плоскость экрана
         """
 
         self.WIDTH, self.HEIGHT = WIDTH, HEIGHT
         self.angle = radians(angle)
-    '''
-    def add_element(self, element):
-        self.all_elements.append(element)
-    '''
-    def update(self):
-        pass
 
-    def rotate_plane(self, ax: str, ange: float):
-        pass
+    def orthogonal_projection_edge(self, obj):
+        """
+        Функция проецирует трехмерные координаты на плоскость экрана
 
-    def orthogonal_projection_edge(self, obj) -> list:
+        :param obj - объект, у которого будут изменяться координаты
+        """
         obj.projected_coords = []
         for i in obj.coords:
             obj.projected_coords.append([pg.Vector2(i.A.x , i.A.y*cos(self.angle) + i.A.z*sin(self.angle)), 
@@ -30,6 +27,11 @@ class Engine:
                                         i.thickness])
         
     def orthogonal_projection(self, obj):
+        """
+        Функция проецирует координаты центра объекта на плоскость экрана
+
+        :param obj - объект, у которого будут изменяться координаты
+        """
         obj.pos_center_v2 = pg.Vector2(obj.pos_center.x, obj.pos_center.y*cos(self.angle) + obj.pos_center.z*sin(self.angle))
     
 

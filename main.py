@@ -167,20 +167,6 @@ class App:
                     self.screen.blit(s, (0,0))
 
                 pg.display.flip()
-                '''
-                while self.control_vars.get('in_pause'):
-                    self.clock.tick(FPS)
-                    pg.display.set_caption(str(int(self.clock.get_fps())))
-
-                    keys = pg.key.get_pressed()
-                    if keys[pg.K_ESCAPE]:
-                        exit()
-                    elif keys[pg.K_o]:
-                        print('lol')
-                        self.control_vars = {'in_menu': False, 'in_game': True, 'in_pause': False}
-                    
-                    pg.display.flip()
-                '''
             
             self.create_pauseUI()
             self.control_vars = self.UI.update(self.control_vars)

@@ -10,7 +10,6 @@ class Button():
         :param pos - позиция левого верхнего угла кнопки
         :param width, height - ширина и высота кнопки
         """
-        
         self.type = "button"
         self.screen = screen
         self.bg_color = bg_color
@@ -25,25 +24,8 @@ class Button():
         theight = self.text.text.get_height()
         tpos = pg.Vector2(self.pos.x + self.width/2 - twidth/2, self.pos.y + self.height/2 - theight/2)
         self.text.pos = tpos
-        
 
-    '''
-    def create_text(self, color, size: int, phrase: str) -> None:
-        """
-        Функция создает текст для кнопки
-
-        :param color, pos, size, phrase - эти параметры требуется передать в конструктор класса Text
-        """
-        self.text = Text(self.screen, color, pg.Vector2(), size, phrase)
-        
-        twidth = self.text.text.get_width()
-        theight = self.text.text.get_height()
-        tpos = pg.Vector2(self.pos.x + self.width/2 - twidth/2, self.pos.y + self.height/2 - theight/2)
-        self.text.pos = tpos
-        #--> Надо не забыть, что эту функцию надо вызывать сразу после создания экземпляра класса "Button"
-    '''
-
-    def on_click(self, control_vars) -> None:
+    def on_click(self, control_vars):
         """
         Функция проверяет нажатие на кнопку и выполняет функцию "function"
         при нажатии
@@ -60,7 +42,7 @@ class Button():
 
         return control_vars
 
-    def draw(self) -> None:
+    def draw(self):
         """
         Отрисовка самой кнопки и текста внутри неё
         """

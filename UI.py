@@ -11,11 +11,10 @@ class UI:
         """
         :param screen - экран, нужно для отрисовки объектов
         """
-
         self.screen =  screen
         self.UI_elements = []
 
-    def add_button(self, screen, bg_color: tuple, color: tuple, pos, width: int, height: int, size: int, phrase: str, function: str) -> None:
+    def add_button(self, screen, bg_color: tuple, color: tuple, pos, width: int, height: int, size: int, phrase: str, function: str):
         """
         Добавляет экземпляр класса "Кнопка" в массив всех элементов
 
@@ -24,7 +23,7 @@ class UI:
         """
         self.UI_elements.append(Button(screen, bg_color, color, pos, width, height, size, phrase, function))
 
-    def add_text(self, screen, color, pos, size: int, phrase: str) -> None:
+    def add_text(self, screen, color, pos, size: int, phrase: str):
         """
         Добавляет экземпляр класса "Текст" в массив всех элементов
 
@@ -33,7 +32,7 @@ class UI:
         """
         self.UI_elements.append(Text(screen, color, pos, size, phrase))
 
-    def update(self, control_vars) -> None:
+    def update(self, control_vars):
         """
         Функция обрабатывает все события, нужно для вызва функции on_click()
 
@@ -52,9 +51,12 @@ class UI:
         return control_vars
 
     def restore(self):
+        """
+        Функция обнуляется все UI элементы
+        """
         self.UI_elements = []
 
-    def draw(self) -> None:
+    def draw(self):
         """
         Функция вызывает функцию draw() у всез элементов из массива UI_elements
         """

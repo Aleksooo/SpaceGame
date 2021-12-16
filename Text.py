@@ -10,7 +10,6 @@ class Text:
         :param size - размер шрифта текста
         :param phrase - текст, который будет отрисовываться
         """
-
         self.type = "text"
         self.screen = screen
         self.color = color
@@ -21,7 +20,7 @@ class Text:
         self.pos = pg.Vector2(pos.x - twidth/2, pos.y - theight/2)
         self.size = size
 
-    def update_phrase(self, phrase: str) -> None:
+    def update_phrase(self, phrase: str):
         """
         Замена текущего текста на новый из переменной "phrase"
 
@@ -29,7 +28,7 @@ class Text:
         """
         self.text = self.f.render(phrase, True, self.color)
 
-    def draw(self) -> None:
+    def draw(self):
         """
         Отрисовка текста
         """

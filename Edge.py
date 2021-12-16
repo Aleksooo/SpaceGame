@@ -8,7 +8,6 @@ class Edge:
         :param color - цвет грани
         :param thickness - толщина линии
         """
-        
         self.A = pos_A
         self.B = pos_B
         self.color = color
@@ -38,3 +37,6 @@ def read_data(file):
             coords.append(Edge(parameters[0], parameters[1], parameters[2], parameters[3]))
     return coords
 
+
+if __name__ == '__main__':
+    print('Не тот файл, надо запустить "main.py"')

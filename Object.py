@@ -13,7 +13,6 @@ class Obj:
         :param angle - угол поворота объекта
         :param scale - коэффициент пропорциональности для увеличения/уменьшения размеров объекта
         """
-
         self.screen = screen
         self.scale = scale
         self.coords = read_data(file)  # сюда надо считать данные о гранях из файла "Player_model.txt"
@@ -31,7 +30,7 @@ class Obj:
 
         self.time_to_die = False
 
-    def update(self) -> None:
+    def update(self):
         """
         Здесь вызываются функции move() и rotate() по необходимости
         """
@@ -40,14 +39,14 @@ class Obj:
 
         self.pos_center += self.velocity
 
-    def move(self) -> None:
+    def move(self):
         """
         Функция двигает объект влево или вправо и также проверяет,
         чтобы объект не выходил на пределы экрана
         """
         self.pos_center += self.velocity
 
-    def rotate(self, ax, angle) -> None:
+    def rotate(self, ax, angle):
         """
         Функция проходит по всем элементам массива coords и поворачивает их
         вдоль оси объекта на угол angle
@@ -90,9 +89,6 @@ class Obj:
                 r = complex(cos(radians(angle)), sin(radians(angle)))
                 z_new = z * r
                 i.B = pg.Vector3(z_new.real, z_new.imag, i.B.z)
-
-
-
 
     def collide_сoin(self, coins):
         """
@@ -143,12 +139,11 @@ class Obj:
                 return True
         return False
 
-    def draw(self) -> None:
+    def draw(self):
         """
         Функция отрисовывает все линии из массива projected_coords
         !!!Вызывать только после проектирования в классе Engine!!! 
         """
-        #pos_center_v2 = pg.Vector2(self.pos_center.x, self.pos_center.y)
         for i in self.projected_coords:
             pg.draw.line(self.screen, i[2], self.pos_center_v2 + i[0], self.pos_center_v2 + i[1], i[3])
 
